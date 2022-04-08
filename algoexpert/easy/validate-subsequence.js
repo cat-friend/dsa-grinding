@@ -11,25 +11,21 @@
 // true
 
 function isValidSubsequence(array, sequence) {
-    let currNumSeq = sequence.shift();
-    let currNumArray = array.shift();
-    const results = [];
-    while (sequence.length && array.length) {
-        if (currNumSeq === currNumArray) {
-            results.push(currNumSeq);
-            currNumSeq = sequence.shift();
-            currNumArray = array.shift();
-        }
-        else {
-            currNumArray = array.shift();
-        }
-    }
-    if (sequence.length) {
+    if (sequence.length > array.length) {
         return false;
     }
-    else return true;
-
+    let indexInRefArray = 0;
+    while (sequence.length) {
+        let currSeqNum = sequence.shift();
+        indexInRefArray = array.indexOf(currSeqNum, indexInRefArray);
+        if (indexInRefArray === -1) {
+            return false;
+        }
+        indexInRefArray++
+    }
+    return true;
 }
 
+console.log(isValidSubsequence([5, 1, 22, 25, 6, -1, 8, 10], [5, 1, 22, 22, 25, 6, -1, 8, 10]));
 
 // need to pass when there are dupe numbers in the sequence
