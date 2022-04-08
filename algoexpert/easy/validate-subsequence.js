@@ -26,6 +26,4 @@ function isValidSubsequence(array, sequence) {
     return true;
 }
 
-console.log(isValidSubsequence([5, 1, 22, 25, 6, -1, 8, 10], [5, 1, 22, 22, 25, 6, -1, 8, 10]));
-
 // need to pass when there are dupe numbers in the sequence
