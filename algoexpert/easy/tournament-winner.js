@@ -1,4 +1,5 @@
 // iterate through results, compare value at winner
+// [homeTeam, awayTeam] --> 1 in results means that the hometeam won, 0 means away team won
 
 function tournamentWinner(competitions, results) {
     const scoreTotals = {};
