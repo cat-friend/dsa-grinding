@@ -10,10 +10,6 @@ function findClosestValueInBst(tree, target) {
     let closestValInBST = currentNode.value;
     while (queue.length) {
         currentNode = queue.shift();
-        console.log("closestValInBST", closestValInBST);
-        console.log("curr value", currentNode.value);
-        console.log("absValDiff", absValDiff);
-        console.log("Math.abs conditionmal", Math.abs(target - currentNode.value));
         if (Math.abs(target - currentNode.value) < absValDiff) {
             closestValInBST = currentNode.value;
             absValDiff = Math.abs(target - currentNode.value)
@@ -26,4 +22,4 @@ function findClosestValueInBst(tree, target) {
 
 // need to update absValDiff when finding an absValDiff that's less than current
 
-// try doing it  recursively - iteratively is O(n)
+// try doing it  recursively - without recursion, space is (O(log(n)));
