@@ -25,3 +25,5 @@ function findClosestValueInBst(tree, target) {
 }
 
 // need to update absValDiff when finding an absValDiff that's less than current
+
+// try doing it  recursively - iteratively is O(n)
