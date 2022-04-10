@@ -3,10 +3,11 @@
 
 function tournamentWinner(competitions, results) {
     const scoreTotals = {};
-    let teamThatGetsPoints = competitions[0][results[0]];
+    let teamThatGetsPoints = determineWinner(competitions[0], results[0]);
     scoreTotals[teamThatGetsPoints] = 3
     let winner = teamThatGetsPoints;
     for (let i = 1; i < results.length; i++) {
+        teamThatGetsPoints = determineWinner(competitions[i], results[i]);
         if (scoreTotals.hasOwnProperty(teamThatGetsPoints)) {
             scoreTotals[teamThatGetsPoints] += 3;
         }
@@ -16,4 +17,12 @@ function tournamentWinner(competitions, results) {
         }
     }
     return winner;
+}
+
+function determineWinner(competition, result) {
+    const [homeTeam, awayTeam] = competition;
+    if (result === 0) {
+        return awayTeam
+    }
+    else return homeTeam
 }
