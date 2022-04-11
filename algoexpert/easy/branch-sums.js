@@ -1,22 +1,26 @@
 function branchSums(root) {
     // most likely depth-first search, go left then right
     // dfs uses stack - push and pop;
-    // keep track of sum
-    const stack = [root];
-    let sum = root.value;
-    let prevSum = sum;
-    const runningSums = [sum];
-    const sums = [];
-    while (stack.length) {
-        let node = stack.pop();
-        sum = runningSums[runningSums.length - 1] + node.value;
-        runningSums.push(sum);
-        if (node.right) stack.push(node.right);
-        else if (node.left) stack.push(node.left);
-        else if (!node.right && !node.left) {
-            sums.push(sum);
-            runningSums.pop();
-        }
-    }
+    // keep track of sum - since you need to backtrack but also keep a running sum, best to use recursion
+    sums = [];
+    calculateBranchSums(root, 0, sums);
     return sums;
 }
+
+function branchSumsHelper(node, runningSum, sumsArray) {
+    if (!node) return;
+    const newRunningSum = runningSum + node.value;
+    if (!node.left && !node.right) {
+        sumsArray.push(newRunningSum);
+        return;
+    }
+    calculateBranchSums(node.left, newRunningSum, sums);
+    calculateBranchSums(node.right, newRunningSum, sums);
+
+}
+
+// time complexity = O(n) where n is the number of nodes -- because you need to traverse each one
+// space complexity in the stack = O(logn) - because of the way search trees & recursion works - eliminating half of the nodes in the remaining tree at every recursive call
+// worst case - very skewed tree - space = O(n)
+// balanced tree -> space = O(n)
+// so overall space complexity is O(nlogn)
