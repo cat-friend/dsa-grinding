@@ -1,13 +1,14 @@
-function branchSums(root) {
     // most likely depth-first search, go left then right
     // dfs uses stack - push and pop;
     // keep track of sum - since you need to backtrack but also keep a running sum, best to use recursion
+
+function branchSums(root) {
     sums = [];
     calculateBranchSums(root, 0, sums);
     return sums;
 }
 
-function branchSumsHelper(node, runningSum, sumsArray) {
+function calculateBranchSums(node, runningSum, sumsArray) {
     if (!node) return;
     const newRunningSum = runningSum + node.value;
     if (!node.left && !node.right) {
@@ -16,7 +17,6 @@ function branchSumsHelper(node, runningSum, sumsArray) {
     }
     calculateBranchSums(node.left, newRunningSum, sums);
     calculateBranchSums(node.right, newRunningSum, sums);
-
 }
 
 // time complexity = O(n) where n is the number of nodes -- because you need to traverse each one
