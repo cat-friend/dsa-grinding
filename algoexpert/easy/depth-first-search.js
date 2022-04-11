@@ -1,8 +1,8 @@
 // since it's a graph, probably need a Set to keep track of where I've been;
-// if !set.has(node) -> set.add(node), push to array
 // ! NOTE ! this.children is an ARRAY since it's a GRAPH problem
 // dfs = stack -> pop & push
 // try recursion?????
+// since the graph is ACYCLICAL - don't need Set to keep track of visited nodes
 
 // Do not edit the class below except
 // for the depthFirstSearch method.
@@ -20,22 +20,11 @@ class Node {
     }
 
     depthFirstSearch(array) {
-      const setOfVisitedNodes = new Set();
-      this.depthFirstSearchHelper(this, setOfVisitedNodes, array);
+      array.push(this.name);
+      for (const child of this.children) {
+        child.depthFirstSearch(array);
+      }
       return array;
-    }
-
-    depthFirstSearchHelper(node, setOfVisitedNodes, resultsArray) {
-        if (!node) return;
-        if (!setOfVisitedNodes.has(node.name)) {
-            resultsArray.push(node.name);
-            setOfVisitedNodes.add(node.name);
-        }
-        while (this.children.length) {
-            const nextNode = this.children.pop();
-            this.depthFirstSearchHelper(nextNode, setOfVisitedNodes, resultsArray
-                )
-        }
     }
   }
 
