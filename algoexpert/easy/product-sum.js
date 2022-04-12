@@ -8,14 +8,22 @@
 // flatten everything first and multiply each value by depth;
 
 function productSum(array, depth = 1) {
+    let newArray = [];
     if (!array.length) {
+        console.log(newArray);
         return;
     }
-    let currVal = array.shift();
-    while (array.length) {
-        if (Array.isArray(currVal)) {
-            
-        }
+    console.log("array[0]", array[0]);
+    if (Array.isArray(array[0])) {
+        array[0].forEach((ele, i) => {
+            array[0][i] = ele * (depth + 1);
+        });
+        return productSum(array, depth + 1);
+    }
+    else {
+        newArray.push(array.shift());
+        console.log("newarray", newArray);
+        return newArray.concat(productSum(array));
     }
 }
 
