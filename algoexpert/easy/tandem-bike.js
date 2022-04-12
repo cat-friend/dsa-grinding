@@ -16,31 +16,12 @@
  * max = 7 + 6 + 5 + 5 + 9 = 32
  */
 
+
+// refactoring notes:  `if (fastest)` does it matter which is ascending, which is descending? no, just needs to be opposites
 function tandemBicycle(redShirtSpeeds, blueShirtSpeeds, fastest) {
     let speed = 0;
     let fastestTeam = redShirtSpeeds;
-    let slowestTeam = blueShirtSpeeds;
-    console.log("Math.max red", Math.max(...redShirtSpeeds));
-    if (Math.max(...redShirtSpeeds) > Math.max(...blueShirtSpeeds)) {
-        fastestTeam = redShirtSpeeds;
-        slowestTeam = blueShirtSpeeds;
-    }
-    else {
-        if (Math.max(...redShirtSpeeds) < Math.max(...blueShirtSpeeds)) {
-            fastestTeam = blueShirtSpeeds;
-            slowestTeam = redShirtSpeeds;
-        }
-        else if (Math.max(...redShirtSpeeds) === Math.max(...blueShirtSpeeds)) {
-            if (Math.min(...redShirtSpeeds) > Math.min(...blueShirtSpeeds)) {
-                fastestTeam = redShirtSpeeds;
-                slowestTeam = blueShirtSpeeds;
-            }
-            if (Math.min(...redShirtSpeeds) < Math.min(...blueShirtSpeeds)) {
-                fastestTeam = blueShirtSpeeds;
-                slowestTeam = redShirtSpeeds;
-            }
-        }
-    }
+    let slowestTeam = blueShirtSpeeds
     if (fastest) {
         fastestTeam.sort((a, b) => a - b);
         slowestTeam.sort((a, b) => b - a);
