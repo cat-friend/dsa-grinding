@@ -1,5 +1,11 @@
 function caesarCipherEncryptor(string, key) {
-    // Write your code here.
+    const alphabet = "abcdefghijklmnopqrstuvwxyz"
+    string = [...string];
+    string.forEach((ele, i) => {
+        const newCharIndex = (alphabet.indexOf(ele) + key) % 26;
+        string[i] = alphabet[newCharIndex];
+    })
+    return string.join("");
   }
 
   // Do not edit the line below.
