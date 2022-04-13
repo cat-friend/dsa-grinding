@@ -7,24 +7,20 @@
 // same thing as flattening input array and multiplying each value by their depth
 // flatten everything first and multiply each value by depth;
 
+// how to know to use recursion:  prompt is recursive --> array contains arrays
+// product sum = sum of all elements in array * depth
+
 function productSum(array, depth = 1) {
-    let newArray = [];
-    if (!array.length) {
-        console.log(newArray);
-        return;
+    let sum = 0;
+    for (const ele of array) {
+        if (Array.isArray(ele)) {
+            sum += productSum(ele, depth + 1)
+        }
+        else {
+            sum += ele;
+        }
     }
-    console.log("array[0]", array[0]);
-    if (Array.isArray(array[0])) {
-        array[0].forEach((ele, i) => {
-            array[0][i] = ele * (depth + 1);
-        });
-        return productSum(array, depth + 1);
-    }
-    else {
-        newArray.push(array.shift());
-        console.log("newarray", newArray);
-        return newArray.concat(productSum(array));
-    }
+    return sum * depth;
 }
 
 // Do not edit the line below.
