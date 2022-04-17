@@ -5,27 +5,25 @@ function smallestDifference(arrayOne, arrayTwo) {
     let possNums = [arrayOne[0], arrayTwo[0]];
     let indexArrayOne = 0;
     let indexArrayTwo = 0;
-    for (let i = 0; i < arrayOne.length; i++) {
+    while (indexArrayOne < arrayOne.length && indexArrayTwo < arrayTwo.length) {
         let eleArrayOne = arrayOne[indexArrayOne];
         let eleArrayTwo = arrayTwo[indexArrayTwo];
-        while (indexArrayTwo < arrayTwo.length) {
-            let currAbsDiff = Math.abs(eleArrayOne - eleArrayTwo);
-
-            if (currAbsDiff === 0) {
-                return [eleArrayOne, eleArrayTwo];
-            }
-            if (currAbsDiff < possSmallestAbsDiff) {
-                possNums = [eleArrayOne, eleArrayTwo];
-            }
-            if (eleArrayOne < eleArrayTwo) {
-                indexArrayOne++;
-            }
-            else indexArrayTwo++;
+        let currAbsDiff = Math.abs(eleArrayOne - eleArrayTwo);
+        if (currAbsDiff === 0) {
+            return [eleArrayOne, eleArrayTwo];
         }
-
+        if (currAbsDiff < possSmallestAbsDiff) {
+            possNums = [eleArrayOne, eleArrayTwo];
+            possSmallestAbsDiff = currAbsDiff;
+        }
+        if (eleArrayOne < eleArrayTwo) {
+            indexArrayOne++;
+        }
+        else indexArrayTwo++;
     }
     return possNums;
 }
+
 
 // Do not edit the line below.
 exports.smallestDifference = smallestDifference;
