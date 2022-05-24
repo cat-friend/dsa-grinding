@@ -16,6 +16,7 @@ function spiralTraverse(array) {
         rightPointer--;
 
         for (let i = rightPointer; i >= leftPointer; i--) {
+            if (topPointer === bottomPointer) break;
             spiralOrderArray.push(array[bottomPointer][i]);
         }
         bottomPointer--;
