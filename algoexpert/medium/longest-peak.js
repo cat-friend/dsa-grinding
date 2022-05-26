@@ -41,7 +41,8 @@ function longestPeak(array) {
             }
         }
     }
-    if (currPeakArray.length > longestPeakArray.length) {
+    console.log("hasPeaked? end", hasPeaked);
+    if (currPeakArray.length > longestPeakArray.length && hasPeaked) {
         longestPeakArray = currPeakArray;
     }
     return longestPeakArray.length;
