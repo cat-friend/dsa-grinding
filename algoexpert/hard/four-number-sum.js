@@ -13,26 +13,25 @@ function fourNumberSum(array, targetSum) {
             }
         }
     }
-    console.log(twoSumObj)
     const quadruplets = [];
+    console.log("twoSumObj", twoSumObj)
     for (const key in twoSumObj) { // key = [[]]
         const targetDiff = targetSum - key
-        if (key.length > 1) {
-            for (const pair in key) {
-                
-            }
-        }
-        if (twoSumObj.hasOwnProperty(targetDiff)) {
-            // if (twoSumObj[targetDiff].length > 1) { // twoSum = [[1, 2], [3, 0]]
-            //     for (const pairNums of twoSumObj[targetDiff]) { // [1, 2]
-            //         quadruplets.push(twoSumObj[sum].concat(pairNums))
-            //     }
-            // }
-            quadruplets.push(twoSumObj[targetDiff].concat(twoSumObj[key]))
+        if (twoSumObj.hasOwnProperty(targetDiff) && targetDiff != key) {
+            twoSumObj[targetDiff].forEach((ele) => {
+                twoSumObj[key].forEach((keyEle) => {
+                    const quadruplet = ele.concat(keyEle);
+                    quadruplets.push(quadruplet);
+                })
+            });
+            delete twoSumObj[targetDiff];
+            console.log("twoSumObj after delete", twoSumObj);
         }
     }
     return quadruplets;
 }
+
+console.log(fourNumberSum([7, 6, 4, -1, 1, 2], 16));
 
 // Do not edit the line below.
 exports.fourNumberSum = fourNumberSum;
