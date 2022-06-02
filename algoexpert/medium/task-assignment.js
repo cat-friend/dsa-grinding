@@ -9,26 +9,33 @@
  */
 
 function taskAssignment(k, tasks) {
-    const tasksCopy = [...tasks]
-    const taskAssignmentArray = new Array(k).fill([]);
-    let taskAssignmentArrayIndex = 0;
-    console.log("taskAA", taskAssignmentArray);
-    while (tasksCopy.length) {
-        const max = Math.max(...tasksCopy);
-        const maxIndex = tasksCopy.indexOf(max);
-        taskAssignmentArray[taskAssignmentArrayIndex].push(max);
-        tasksCopy.splice(maxIndex, 1);
-        const min = Math.min(...tasksCopy);
-        const minIndex = tasksCopy.indexOf(min);
-        taskAssignmentArray[taskAssignmentArrayIndex].push(min);
-        tasksCopy.splice(minIndex, 1);
-        taskAssignmentArray[taskAssignmentArrayIndex] = [maxIndex, minIndex]
-        taskAssignmentArrayIndex++;
-        console.log("tasksCopy", tasksCopy)
+    const taskIndicesObj = tasksObjectMaker(tasks);
+    tasks.sort((a, b) => a - b);
+    let minPointer = 0;
+    let maxPointer = tasks.length - 1;
+    const taskAssignmentArray = [];
+    while (minPointer < maxPointer) {
+        const minIndex = taskIndicesObj[tasks[minPointer]].pop();
+        const maxIndex = taskIndicesObj[tasks[maxPointer]].pop();
+        taskAssignmentArray.push([minIndex, maxIndex]);
+        minPointer++;
+        maxPointer--;
     }
     return taskAssignmentArray;
   }
 
-  console.log(taskAssignment(3, [1, 3, 5, 3, 1, 4]))
+  function tasksObjectMaker(tasks) {
+      const tasksObj = {};
+      for (let i = 0; i < tasks.length; i++) {
+          if (tasksObj.hasOwnProperty(tasks[i])) {
+              tasksObj[tasks[i]].push(i);
+          }
+          else {
+              tasksObj[tasks[i]] = [i]
+          }
+      }
+      return tasksObj;
+  }
+
   // Do not edit the line below.
   exports.taskAssignment = taskAssignment;
