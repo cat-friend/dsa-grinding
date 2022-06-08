@@ -42,6 +42,9 @@ function getGroupedAnagrams(words) {
     // for/in the dictionary obj
     // other method:  split each word into an array, sort the array, then rejoin
     // keep running container of groups, things that are equivalent
+
+
+    // easier way:  use set, return length of set.entries();
     words.forEach((ele, i) => {
         words[i] = ele.split("");
         words[i].sort();
