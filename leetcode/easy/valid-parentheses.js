@@ -1,8 +1,6 @@
-/**
- * @param {string} s
- * @return {boolean}
- */
- var isValid = function(s) {
+isValid("{[()]}()")
+
+function isValid(s) {
     if (s.length % 2 > 0) return false;
     const stack = [];
     const matchingBrackets = {
@@ -12,9 +10,14 @@
     }
     for (let i = 0; i < s.length; i++) {
         const currChar = s[i];
-        if (matchingBrackets.hasOwnProperty(currChar)) stack.push(currChar);
+        if (matchingBrackets.hasOwnProperty(currChar)) {
+            stack.push(currChar);
+        }
         else {
-            if (matchingBrackets[stack.pop()] === currChar) continue;
+            const lastInStack = stack.pop()
+            if (matchingBrackets[lastInStack] === currChar) {
+                continue
+            }
             else return false;
         }
     }
