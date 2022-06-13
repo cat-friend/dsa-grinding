@@ -38,11 +38,13 @@ function playlist(songs) {
     songs = songLengthConverter(songs);
     const songsObj = playlistObj(songs);
     for (let i = 0; i < songs.length; i++) {
-        if (!songsObj.hasOwnProperty(songs[i])) continue;
+        const lengthDiff = 60 - songs[i];
+        if (!songsObj.hasOwnProperty(lengthDiff)) continue;
         else {
-            if (!songsObj[songs[i]].length > 1) continue;
+            if (lengthDiff === songs[i] && !songsObj[songs[i]].length > 1) continue;
             else {
                 for (let j = 0; j < songsObj[songs[i]].length; j++) {
+                    console.log("songsObj[songs[i]][j] === i", songsObj[songs[i]][j] === i)
                     if (songsObj[songs[i]][j] === i) continue;
                     else pairsCount++
                 }
@@ -59,7 +61,9 @@ function playlistObj(songs) {
         if (obj.hasOwnProperty(songs[i])) {
             obj[songs[i]].push(i);
         }
+        else obj[songs[i]] = [i]
     }
+    console.log("obj", obj)
     return obj;
 }
 
