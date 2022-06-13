@@ -20,15 +20,52 @@ Constraints:
     1 <= songs[i] <= 1000, where 0 <= i < n
  */
 
+// convert song lengths to songLength % 60
+// create songs obj
+    // key: value
+    // song % 60: [indices]
+// key into obj - does obj have property 60 - songs[i]?
+    // if yes:
+        // is songsObj[songs[i]].length > 1?
+            // if no -> continue
+            // if yes -> iterate through indices
+                // if song index === i continue
+                // else paircount++
+
 
 function playlist(songs) {
     let pairsCount = 0;
+    songs = songLengthConverter(songs);
+    const songsObj = playlistObj(songs);
     for (let i = 0; i < songs.length; i++) {
-        for (let j = i +1; j < songs.length; j++) {
-            if ((songs[i] + songs[j]) % 60 === 0) {
-                pairsCount++
+        if (!songsObj.hasOwnProperty(songs[i])) continue;
+        else {
+            if (!songsObj[songs[i]].length > 1) continue;
+            else {
+                for (let j = 0; j < songsObj[songs[i]].length; j++) {
+                    if (songsObj[songs[i]][j] === i) continue;
+                    else pairsCount++
+                }
             }
         }
     }
     return pairsCount
+}
+
+
+function playlistObj(songs) {
+    const obj = {};
+    for (let i = 0; i < songs.length; i++) {
+        if (obj.hasOwnProperty(songs[i])) {
+            obj[songs[i]].push(i);
+        }
+    }
+    return obj;
+}
+
+function songLengthConverter(songs) {
+    for (let i = 0; i < songs.length; i++) {
+        songs[i] = songs[i] % 60;
+    }
+    return songs;
 }
