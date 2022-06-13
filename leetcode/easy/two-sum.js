@@ -20,9 +20,17 @@ var twoSum = function (nums, target) {
     const numObj = numObjGenerator(nums);
     for (let i = 0; i < nums.length; i++) {
         const diff = target - nums[i]
-        if (numObj.hasOwnProperty)
+        if (numObj.hasOwnProperty(diff)) {
+            if (diff === nums[i]) {
+                if (numObj[diff].length > 1) {
+                    return [numObj[diff][0], numObj[diff][1]]
+                }
+                else continue;
+            }
+            return [i, numObj[diff][0]]
+        }
     }
-
+    return [];
 };
 
 function numObjGenerator(nums) {
