@@ -11,32 +11,37 @@
  * @return {ListNode}
  */
 
-// make a stack! stack holds Math.floor((l1.val + l2.val)/10)
-// (l1.val + l2.val + stack.pop()) % 10 gets pushed to stack, added to the last value of the stack
-    // only need to use end of stack if stack.length - 1 > i;
-// if Math.floor((l1.val + l2.val)/10) > 0, then push Math.floor((l1.val + l2.val)/10) to stack
-// then return stack!
- var addTwoNumbers = function(l1, l2) {
-    // first fill output array with l1's values
-    const output = [];
-    const stack = [0];
-    let currNode = l1;
-    while (currNode) {
-        output.push(currNode.val);
+// add the two nodes -> yield nodeSum
+// nodeSum % 10 -> output nodeVal
+// Math.floor(nodeSum/10) -> next.val
+// if only only l1/l2 --> add one of the values to next.val (which is now curr.val)
+// what happens when you reach the end?
+// if no l1CurrNode.next && no l2CurrNode.next --> make the  Math.floor(nodeSum/10) -> next.val
+
+// use queue
+// nodesum = l1currnode.val + l2currnode.val
+// if nodesum >= 10, put 0 as nodeval (push to queue), then push 10s digit to queue
+//
+var addTwoNumbers = function (l1, l2) {
+    let l1CurrNode = l1;
+    let l2CurrNode = l2;
+    const queue = [0];
+    let outputLL = new ListNode();
+    let currNode = outputLL;
+    while (l2CurrNode || l1CurrNode) {
+        const l1Val = l1CurrNode ? l1CurrNode.val : 0;
+        const l2Val = l2CurrNode ? l2CurrNode.val : 0;
+        const nodeSum = l1Val + l2Val + queue.pop();
+        const nextVal = Math.floor(nodeSum / 10);
+        queue.push(nextVal);
+        const currVal = nodeSum % 10;
+        currNode.next = new ListNode(currVal);
         currNode = currNode.next;
-    };
-    // second, traverse l2
-        // output[i] = (l2.val + output[i] + stack.pop()) % 10;
-        // stack.push(Math.floor((l1.val + l2.val)/10)) --> will send a >= 0
-    currNode = l2;
-    let i = 0;
-    while (currNode) {
-        output[i] = output[i] ? (currNode.val + output[i] + stack.pop()) % 10 : (currNode.val + stack.pop()) % 10;
-        stack.push(Math.floor(currNode.val));
-        i++;
-        currNode = currNode.next
+        l1CurrNode = l1CurrNode ? l1CurrNode.next : undefined;
+        l2CurrNode = l2CurrNode ? l2CurrNode.next : undefined;
     }
-    if (stack[0] > 0) output.push(stack.pop());
-    // return output
-    return output;
+    if (queue[0] > 0) {
+        currNode.next = new ListNode(queue.pop());
+    }
+    return outputLL.next
 };
