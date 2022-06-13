@@ -17,5 +17,21 @@ You can return the answer in any order.
  * @return {number[]}
  */
 var twoSum = function (nums, target) {
+    const numObj = numObjGenerator(nums);
+    for (let i = 0; i < nums.length; i++) {
+        const diff = target - nums[i]
+        if (numObj.hasOwnProperty)
+    }
 
 };
+
+function numObjGenerator(nums) {
+    const numObj = {};
+    for (let i = 0; i < nums.length; i++) {
+        if (numObj.hasOwnProperty(nums[i])) numObj[nums[i]].push(i)
+        else {
+            numObj[nums[i]] = [i]
+        }
+    }
+    return numObj;
+}
