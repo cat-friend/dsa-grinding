@@ -49,7 +49,6 @@ else {
 // LVIII
  var romanToInt = function(s) {
     let count = 0;
-
     const rnDict = {
         "I": 1,
         "V": 5,
@@ -65,7 +64,6 @@ else {
     if (rnDict[s[0]] >= rnDict[s[1]]) count += rnDict[s[0]];
     for (let i = 1; i < s.length; i++) {
         const currRN = rnDict[s[i]];
-        console.log(currRN);
         const prevRN = rnDict[s[i - 1]];
         const nextRN = rnDict[s[i + 1]];
         if (currRN > prevRN) {
