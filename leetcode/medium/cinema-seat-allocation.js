@@ -42,10 +42,9 @@ var maxNumberOfFamilies = function (n, reservedSeats) {
         return a[0] - b[0] === 0 ? a[1] - b[1] : a[0] - b[0]
     });
     reservedSeats.push([-1, 0]);
-    console.log("reservedSeats", reservedSeats)
     let prevRow = reservedSeats[0][0];
     let rowSeatsTaken = {};
-    let rowPoss = 2;
+    let rowPoss = 3;
     for (let i = 0; i < reservedSeats.length; i++) {
         const currSeat = reservedSeats[i][1];
         const currRow = reservedSeats[i][0]
@@ -61,11 +60,10 @@ var maxNumberOfFamilies = function (n, reservedSeats) {
         }
         rowSeatsTaken[currSeat] = currSeat;
         prevRow = currRow;
-        console.log("prevRow", prevRow, "rowPoss", rowPoss, "rowSeatsTaken", rowSeatsTaken)
     }
-    return count + (n - numRows) * 2;
+    return count + (numRows) * 2;
 };
 
 
 
-console.log(maxNumberOfFamilies(4, [[4, 3], [1, 4], [4, 6], [1, 7]]));
+console.log(maxNumberOfFamilies(3, [[1,2],[1,3],[1,8],[2,6],[3,1],[3,10]]));
