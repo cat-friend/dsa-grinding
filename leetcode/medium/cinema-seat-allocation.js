@@ -49,12 +49,18 @@ var maxNumberOfFamilies = function (n, reservedSeats) {
         const currSeat = reservedSeats[i][1];
         const currRow = reservedSeats[i][0]
         if (currRow !== prevRow) {
-            console.log("currSet", reservedSeats[i], "\ncount", count, "\nrowSeatsTaken", rowSeatsTaken)
-            if (rowSeatsTaken.hasOwnProperty(5) || rowSeatsTaken.hasOwnProperty(6)) rowPoss = 0;
-            else {
-                if (rowSeatsTaken.hasOwnProperty(2) || rowSeatsTaken.hasOwnProperty(3) || rowSeatsTaken.hasOwnProperty(8) || rowSeatsTaken.hasOwnProperty(9)) rowPoss--;
-                if (rowSeatsTaken.hasOwnProperty(4) || rowSeatsTaken.hasOwnProperty(5) || rowSeatsTaken.hasOwnProperty(6) || rowSeatsTaken.hasOwnProperty(7)) rowPoss--;
+            if (rowSeatsTaken.hasOwnProperty(5) || rowSeatsTaken.hasOwnProperty(6)) rowPoss = 1;
+            if (rowSeatsTaken.hasOwnProperty(2) || rowSeatsTaken.hasOwnProperty(3)) {
+                rowPoss--;
+                if (rowSeatsTaken.hasOwnProperty(8) || rowSeatsTaken.hasOwnProperty(9)) {
+                    rowPoss = 1;
+                }
             }
+            if (rowSeatsTaken.hasOwnProperty(4) || rowSeatsTaken.hasOwnProperty(5)) {
+                rowPoss--;
+                if (rowSeatsTaken.hasOwnProperty(6) || rowSeatsTaken.hasOwnProperty(7)) rowPoss = 0
+            }
+
             count = rowPoss >= 0 ? count + rowPoss : count + 0;
             rowSeatsTaken = {};
             rowPoss = 2;
@@ -68,4 +74,4 @@ var maxNumberOfFamilies = function (n, reservedSeats) {
 };
 
 
-console.log(maxNumberOfFamilies(4, [[4,3],[1,4],[4,6],[1,7]]));
+console.log(maxNumberOfFamilies(3, [[1, 2], [1, 3], [1, 8], [2, 6], [3, 1], [3, 10]]));
