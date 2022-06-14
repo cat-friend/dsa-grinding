@@ -31,8 +31,7 @@ turn reserved seats into an object
         -- reservedSeats = {};
         -- rowPoss = 2;
         -- rowNums--
-    prevRow = currRow;
-    reservedSeats = currRes[1];
+    prevRow = currRow;=
     what happens when you get to the end? need to make currRow !== prevRow trigger, so make a dummy entry - after sort, push [0, 0]
 */
 var maxNumberOfFamilies = function (n, reservedSeats) {
@@ -42,24 +41,31 @@ var maxNumberOfFamilies = function (n, reservedSeats) {
     reservedSeats.sort((a, b) => {
         return a[0] - b[0] === 0 ? a[1] - b[1] : a[0] - b[0]
     });
-    let prevRow = 0;
-    const freeSeats = {};
-    while (reservedSeats.length) {
-        const currRes = reservedSeats.shift();
-        const currRow = currRes[0];
-        const currSeat = currRes[1];
-        if (currRow === prevRow) {
-            occupiedSeats.push(currSeat)
+    reservedSeats.push([-1, 0]);
+    console.log("reservedSeats", reservedSeats)
+    let prevRow = reservedSeats[0][0];
+    let rowSeatsTaken = {};
+    let rowPoss = 2;
+    for (let i = 0; i < reservedSeats.length; i++) {
+        const currSeat = reservedSeats[i][1];
+        const currRow = reservedSeats[i][0]
+        if (currRow !== prevRow) {
+            if (rowSeatsTaken.hasOwnProperty(2) || rowSeatsTaken.hasOwnProperty(3) || rowSeatsTaken.hasOwnProperty(8) || rowSeatsTaken.hasOwnProperty(9)) rowPoss--;
+            console.log("rowPoss", rowPoss)
+            if (rowSeatsTaken.hasOwnProperty(4) || rowSeatsTaken.hasOwnProperty(5) || rowSeatsTaken.hasOwnProperty(6) || rowSeatsTaken.hasOwnProperty(7)) rowPoss = 0;
+            console.log("rowPoss", rowPoss)
+            count += rowPoss;
+            rowSeatsTaken = {};
+            rowPoss = 2;
+            numRows--;
         }
-        else {
-            if (occupiedSeats.length) {
-                numRows--
-            }
-        }
+        rowSeatsTaken[currSeat] = currSeat;
+        prevRow = currRow;
+        console.log("prevRow", prevRow, "rowPoss", rowPoss, "rowSeatsTaken", rowSeatsTaken)
     }
-    return count + (n - numRows) * 3;
+    return count + (n - numRows) * 2;
 };
 
 
 
-maxNumberOfFamilies(4, [[4,3],[1,4],[4,6],[1,7]])
+console.log(maxNumberOfFamilies(4, [[4, 3], [1, 4], [4, 6], [1, 7]]));
