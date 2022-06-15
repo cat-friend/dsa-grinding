@@ -49,12 +49,11 @@ var maxNumberOfFamilies = function (n, reservedSeats) {
         const currSeat = reservedSeats[i][1];
         const currRow = reservedSeats[i][0]
         if (currRow !== prevRow) {
-            if (rowSeatsTaken.hasOwnProperty(5) || rowSeatsTaken.hasOwnProperty(6)) rowPoss = 1;
-            if (rowSeatsTaken.hasOwnProperty(2) || rowSeatsTaken.hasOwnProperty(3)) {
-                rowPoss--;
-                if (rowSeatsTaken.hasOwnProperty(8) || rowSeatsTaken.hasOwnProperty(9)) {
-                    rowPoss = 1;
-                }
+            console.log("currSet", reservedSeats[i], "\ncount", count, "\nrowSeatsTaken", rowSeatsTaken, "\nnumRows", numRows)
+            if (rowSeatsTaken.hasOwnProperty(5) || rowSeatsTaken.hasOwnProperty(6)) rowPoss = 0;
+            else {
+                if (rowSeatsTaken.hasOwnProperty(2) || rowSeatsTaken.hasOwnProperty(3) || rowSeatsTaken.hasOwnProperty(8) || rowSeatsTaken.hasOwnProperty(9)) rowPoss--;
+                if (rowSeatsTaken.hasOwnProperty(4) || rowSeatsTaken.hasOwnProperty(5) || rowSeatsTaken.hasOwnProperty(6) || rowSeatsTaken.hasOwnProperty(7)) rowPoss--;
             }
             if (rowSeatsTaken.hasOwnProperty(4) || rowSeatsTaken.hasOwnProperty(5)) {
                 rowPoss--;
@@ -68,8 +67,10 @@ var maxNumberOfFamilies = function (n, reservedSeats) {
         }
         rowSeatsTaken[currSeat] = currSeat;
         prevRow = currRow;
+        console.log("count at end of iteration", count)
     }
     console.log("count", count)
+    console.log("numRows", numRows)
     return count + (numRows) * 2;
 };
 
