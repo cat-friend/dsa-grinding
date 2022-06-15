@@ -16,10 +16,9 @@ right pointer = n % 2 ? leftpointer + 2 : leftpointer + 1;
 */
 var sumZero = function (n) {
     const result = new Array(n).fill(0);
-    if (n = 1) return result;
+    if (n === 1) return result;
     let leftPointer = Math.floor(n / 2) - 1;
     let rightPointer = n % 2 ? leftPointer + 2 : leftPointer + 1;
-    console.log("leftpointer at start", leftPointer, "\n", "rightPointer at start", rightPointer);
     if (n % 2) {
         while (leftPointer >= 0 && rightPointer < result.length) {
             result[leftPointer] = result[leftPointer + 1] - 1;
@@ -29,7 +28,16 @@ var sumZero = function (n) {
         }
     }
     else {
-        while (leftPointer >= 0 )
+        result[leftPointer] = -1;
+        result[rightPointer] = 1;
+        leftPointer--;
+        rightPointer++;
+        while (leftPointer >= 0 && rightPointer < result.length) {
+            result[leftPointer] = result[leftPointer + 1] - 1;
+            result[rightPointer] = result[rightPointer - 1] + 1;
+            leftPointer--;
+            rightPointer++;
+        }
     }
     return result;
 };
