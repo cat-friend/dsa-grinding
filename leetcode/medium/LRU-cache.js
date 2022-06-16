@@ -1,39 +1,42 @@
 /**
  * @param {number} capacity
  */
+/**
+LRUCache - keep track of size
+use a combination of DLL and hash table (object)
+    cache is the DLL, hash table gives access to the DLL
 
-// LRUCache - keep track of size
-// use a combination of DLL and hash table (object)
-//  cache is the DLL, hash table gives access to the DLL
-// hash table structure:
-//  key: key given
-//  value: newNode
-//      ex: this.hashTable = {}
-// new item - goes to the head
-// least recently used (oldest) - goes to the tail
-// PUT -
-// when an item is in the hash table/cache
-// update its value
-// this.hashTable[key]["value"] = value;
-// move it from its position in the DLL to the head
-// node = this.hashTable[key];
-// need to make the node.prev = node.next
-// node.prev = null;
-// node.next = this.cache.head
-// node.next.prev = node;
-// if item not in cache
-// cache is full - kick out least recently used item (the oldest item) -> this will be the tail
-// then delete the item from the hash table
-// identify the tail: cache.tail
-// newTail = cache.tail.prev
-// this.cache.tail = newTail;
-// this.cache.tail.next = null;
+HASH TABLE
+    hash table structure:
+        key: key given
+        value: newNode
+        ex: this.hashTable = {}
+    new item - goes to the head
+    least recently used (oldest) - goes to the tail
 
-// make the new node
-// newNode.prev = this.cache.tail.prev
-// newNode.prev.next - newNode;
-// delete this.hashTable.value of the thing in the tail
-//
+PUT -
+    when an item is in the hash table/cache
+        --> update its value
+        --> this.hashTable[key]["value"] = value;
+move it from its position in the DLL to the head
+node = this.hashTable[key];
+need to make the node.prev = node.next
+node.prev = null;
+node.next = this.cache.head
+node.next.prev = node;
+if item not in cache
+cache is full - kick out least recently used item (the oldest item) -> this will be the tail
+then delete the item from the hash table
+identify the tail: cache.tail
+newTail = cache.tail.prev
+this.cache.tail = newTail;
+this.cache.tail.next = null;
+
+make the new node
+newNode.prev = this.cache.tail.prev
+newNode.prev.next - newNode;
+delete this.hashTable.value of the thing in the tail
+ */
 /**
  *
  */
@@ -109,10 +112,9 @@ LRUCache.prototype.put = function (key, value) {
             this.removeFromTail();
         }
         else {
-            this.addToHead(newNode)
             this.size++;
         }
-
+        this.addToHead(newNode)
     }
 };
 
@@ -135,9 +137,10 @@ LRUCache.prototype.removeFromTail = function () {
     const key = this.cache.tail.value;
     this.cache.tail.prev.next = null;
     this.cache.tail = this.cache.tail.prev;
-    delete this.hashTable[key]
-    console.log("key", key)
+    delete this.hashTable[key];
+    console.log("key", key);
     console.log("hash table after deletion", this.hashTable)
+    console.log("cache after deletion", this.cache);
 }
 
 LRUCache.prototype.addToTail = function (node) {
