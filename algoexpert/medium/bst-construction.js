@@ -2,6 +2,7 @@
 // the insert, contains, and remove methods.
 // Feel free to add new properties and methods
 // to the class.
+// https://www.algoexpert.io/questions/bst-construction
 class BST {
     constructor(value) {
         this.value = value;
@@ -85,7 +86,7 @@ class BST {
         while (stack.length) {
             currNode = stack.pop();
             if (currNode.value === value) {
-                
+
             }
         }
 
