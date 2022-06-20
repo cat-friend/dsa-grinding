@@ -39,7 +39,7 @@ class BST {
         stack.push(this);
         while (stack.length) {
             const currNode = stack.pop();
-            if (currNode.value < this.value) {
+            if (currNode.value > value) {
                 if (currNode.left) stack.push(currNode.left);
                 else currNode.left = newNode;
             }
@@ -49,6 +49,7 @@ class BST {
             }
         }
         this.set.add(value);
+        console.log("this", this)
         return this;
     }
 
@@ -63,21 +64,16 @@ class BST {
 
     remove(value) {
         /*
+        DFT
         find matching node
         once matching node is found,
-            removedNode
-            prevNode.left or right = removedNode.right
-            then drill all the way to the deepest removedNode.right.left and then removedNode.right.left.left[...].left =  removedNode.left
-        set the pointer to the matching node to null
-        traverse the matching node and add all items to a queue/stack/whatever maybe some
-            while (currNode.left || currNode.right) {
-                if (currNode.left) stack.push(currNode.left)
-                if (currNode.right) stack.push(currNode.right) }
-        then insert all of those items
+            then drill all the way to the deepest removedNode.right.left and then removedNode.right.left.left[...].left.value =  currNode.value
+            prevInOrderSuccessor.left = null;
         then when the queue/stack is empty, return this
         removed value from this.set
         */
         // if single node BST, don't remove anything
+        console.log("remove evalue", value)
         if (!this.left && !this.right) return this;
         const stack = [];
         let currNode;
@@ -86,11 +82,45 @@ class BST {
         while (stack.length) {
             currNode = stack.pop();
             if (currNode.value === value) {
+                if (currNode.right) {
+                    if (currNode.left) {
+                        const successorStack = [];
+                        successorStack.push(currNode.right)
+                        while (successorStack.length) {
+                            const searchNode = successorStack.pop();
+                            if (searchNode.left) successorStack.push(searchNode.left);
+                            else {
+                                currNode.value = searchNode.value;
+                                searchNode.left = null;
+                            }
+                        }
 
+                    }
+                    else {
+                        currNode.value = currNode.right.value;
+                        currNode.left = currNode.left.left ? currNode.left.left : null;
+                        currNode.right = currNode.right.right ? currNode.right.right : null;
+                    }
+                }
+                else if (currNode.left) {
+                    currNode.value = currNode.left.value;
+                    currNode.left = currNode.left.left ? currNode.left.left : null;
+                    currNode.right = currNode.right.right ? currNode.right.right : null;
+                }
+                if (!currNode.right && !currNode.left) {
+                    if (prevNode.left === currNode) prevNode.left = null;
+                    if (prevNode.right === currNode) prevNode.right = null;
+                }
+                console.log("this remove", this)
+                this.set.delete(value);
+                return this;
             }
+            if (value > currNode.value) stack.push(currNode.right);
+            else stack.push(currNode.left);
+            prevNode = currNode;
         }
-
     }
+
 }
 
 // Do not edit the line below.
