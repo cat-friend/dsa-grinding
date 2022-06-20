@@ -7,6 +7,7 @@ class BST {
         this.value = value;
         this.left = null;
         this.right = null;
+        this.set = new Set([value]);
     }
 
     newNode(value) {
@@ -22,46 +23,71 @@ class BST {
         first make a new node, const = newNode(value)
         DFT
         make a stack
-        if value < this.value look left and look at this.left.value
-            if this.left.value < value, newNode.left = currNode.left
-            currNode.left = newNode
-            return this
-        if value >= this.value look right and look at this.right.value
-            if this.right.value >= value, newNode.right = currNode.right
-            currNode.right = newNode
-            return this
-            if it's less, then need to look left
+        while (stack.length) {
+            currNode = stack.pop();
+            if value < this.value look left and if currNode.left, stack.push(currNode.left);
+            else currNode.left = newNode;
+            if value >= this.value look right and if currNode.right, stack.push(currNode.right);
+            else currNode.right = newNode;
+            }
+        this.set.add(value);
+        return this
         */
+        const newNode = this.newNode(value);
+        const stack = [];
+        stack.push(this);
+        while (stack.length) {
+            const currNode = stack.pop();
+            if (currNode.value < this.value) {
+                if (currNode.left) stack.push(currNode.left);
+                else currNode.left = newNode;
+            }
+            else {
+                if (currNode.right) stack.push(currNode.right);
+                else currNode.right = newNode;
+            }
+        }
+        this.set.add(value);
         return this;
     }
 
     contains(value) {
         // Write your code here.
         /* APPROACH
-        DFT
-        push head into stack
-        while loop; conditional - stack.length
-        does value === currNode.value? return true
-        else {
-            if (value < currNode.value && currNode.left) stack.push(currNode.left)
-            if (value > currNode.value && currNode.right) stack.push(currNode.right);
-        }
-        return false;
+        can make this in O(1) time by making a set as a property
+        return this.set.contains(value)
         */
+        return this.set.has(value);
     }
 
     remove(value) {
         /*
         find matching node
-        once matching node is found, set the pointer to the matching node to null
-        bft of the matching node and add all items to a queue/stack/whatever
+        once matching node is found,
+            removedNode
+            prevNode.left or right = removedNode.right
+            then drill all the way to the deepest removedNode.right.left and then removedNode.right.left.left[...].left =  removedNode.left
+        set the pointer to the matching node to null
+        traverse the matching node and add all items to a queue/stack/whatever maybe some
+            while (currNode.left || currNode.right) {
+                if (currNode.left) stack.push(currNode.left)
+                if (currNode.right) stack.push(currNode.right) }
         then insert all of those items
         then when the queue/stack is empty, return this
+        removed value from this.set
         */
         // if single node BST, don't remove anything
+        if (!this.left && !this.right) return this;
         const stack = [];
         let currNode;
         let prevNode;
+        stack.push(this);
+        while (stack.length) {
+            currNode = stack.pop();
+            if (currNode.value === value) {
+                
+            }
+        }
 
     }
 }
