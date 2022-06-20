@@ -9,9 +9,29 @@ class BST {
         this.right = null;
     }
 
+    newNode(value) {
+        const newNode = {
+            value,
+            left: null,
+            right: null
+        }
+        return newNode;
+    }
     insert(value) {
-        // Write your code here.
-        // Do not edit the return statement of this method.
+        /* APPROACH
+        first make a new node, const = newNode(value)
+        DFT
+        make a stack
+        if value < this.value look left and look at this.left.value
+            if this.left.value < value, newNode.left = currNode.left
+            currNode.left = newNode
+            return this
+        if value >= this.value look right and look at this.right.value
+            if this.right.value >= value, newNode.right = currNode.right
+            currNode.right = newNode
+            return this
+            if it's less, then need to look left
+        */
         return this;
     }
 
