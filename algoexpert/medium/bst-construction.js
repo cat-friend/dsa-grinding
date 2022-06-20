@@ -49,7 +49,6 @@ class BST {
             }
         }
         this.set.add(value);
-        console.log("this", this)
         return this;
     }
 
@@ -73,7 +72,6 @@ class BST {
         removed value from this.set
         */
         // if single node BST, don't remove anything
-        console.log("remove evalue", value)
         if (!this.left && !this.right) return this;
         const stack = [];
         let currNode;
@@ -81,47 +79,56 @@ class BST {
         stack.push(this);
         while (stack.length) {
             currNode = stack.pop();
-            if (currNode.value === value) {
+            if (currNode.value < value) {
+                stack.push(currNode.right);
+            }
+            if (currNode.value > value) {
+                stack.push(currNode.left);
+            }
+            else {
                 if (currNode.right) {
-                    if (currNode.left) {
-                        const successorStack = [];
-                        successorStack.push(currNode.right)
-                        while (successorStack.length) {
-                            const searchNode = successorStack.pop();
-                            if (searchNode.left) successorStack.push(searchNode.left);
-                            else {
-                                currNode.value = searchNode.value;
-                                searchNode.left = null;
-                            }
+                    const leftDFT = [];
+                    let leftDFTPrevNode;
+                    let leftDrillNode;
+                    if (currNode.right.left) {
+                        leftDFT.push(currNode.right.left);
+                        while (leftDFT.length) {
+                            leftDrillNode = leftDFT.pop();
+                            if (leftDrillNode.left.left) leftDFT.push(leftDrillNode.left.left);
+                            leftDFTPrevNode = leftDrillNode;
                         }
-
+                        currNode.value = leftDrillNode.left.value;
+                        leftDFTPrevNode.left = null;
                     }
                     else {
-                        currNode.value = currNode.right.value;
-                        currNode.left = currNode.left.left ? currNode.left.left : null;
-                        currNode.right = currNode.right.right ? currNode.right.right : null;
+                        if (currNode.right) {
+                            currNode.value = currNode.right.value;
+                            currNode.right = currNode.right.right ? currNode.right.right : null;
+                            currNode.left = null;
+                        }
+                        else {
+                            if (prevNode.left.value === value ) prevNode.left = null;
+                            else prevNode.right = null;
+                        }
                     }
                 }
-                else if (currNode.left) {
-                    currNode.value = currNode.left.value;
-                    currNode.left = currNode.left.left ? currNode.left.left : null;
-                    currNode.right = currNode.right.right ? currNode.right.right : null;
-                }
-                if (!currNode.right && !currNode.left) {
-                    if (prevNode.left === currNode) prevNode.left = null;
-                    if (prevNode.right === currNode) prevNode.right = null;
-                }
-                console.log("this remove", this)
                 this.set.delete(value);
                 return this;
             }
-            if (value > currNode.value) stack.push(currNode.right);
-            else stack.push(currNode.left);
             prevNode = currNode;
         }
     }
-
 }
+
+// const TestBST = new BST(10);
+// const insert = [5, 15, 2, 5, 13, 22, 1, 14, 12]
+// for (const num of insert) {
+//     TestBST.insert(num);
+// }
+// console.log("TestBST after inserting", TestBST)
+// TestBST.remove(10);
+// console.log("TestBST after remove", TestBST)
+// TestBST.contains(15);
 
 // Do not edit the line below.
 exports.BST = BST;
