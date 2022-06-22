@@ -14,7 +14,16 @@ class Node {
     }
 
     breadthFirstSearch(array) {
-      // Write your code here.
+      // bfs uses a queue - first in, first out
+      let queue = [];
+      queue.push(this);
+      const children = [];
+      while (queue.length) {
+        const currNode = queue.shift();
+        queue = queue.concat(currNode.children);
+        children.push(currNode.name)
+      }
+      return children;
     }
   }
 
