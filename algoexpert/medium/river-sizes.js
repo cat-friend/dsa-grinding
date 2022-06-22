@@ -8,15 +8,21 @@ function riverSizes(matrix) {
     // when the queue is empty, push the river size to the river length array
     // IS THERE A WAY TO DO IT WITHOUT TWO NESTED `for` LOOPS?
     const sizes = [];
-    for (let i = 0; i < matrix.length; i ++) {
+    const visitedNodes = new Set();
+    for (let i = 0; i < matrix.length; i++) {
         for (let j = 0; j < matrix[i].length; i++) {
-            
+            if (matrix[i][j]) {
+                if (visitedNodes.has(`${i}, ${j}`)) continue;
+                else {
+                    
+                }
+            }
         }
     }
     return sizes
 }
 
-function findHits(matrix, coordinates, set) {
+function findAdjacentHits(matrix, coords, set) {
     // coordinates: [i][j]
     const hits = [];
     // find north
