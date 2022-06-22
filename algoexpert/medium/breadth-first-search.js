@@ -29,3 +29,7 @@ class Node {
 
   // Do not edit the line below.
   exports.Node = Node;
+
+// notes:
+// concat returns a new array, does not mutate original array
+// keep in mind what you're keying into for the object - children, name
