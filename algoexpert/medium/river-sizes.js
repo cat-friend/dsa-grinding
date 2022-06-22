@@ -9,6 +9,7 @@ function riverSizes(matrix) {
     // IS THERE A WAY TO DO IT WITHOUT TWO NESTED `for` LOOPS?
     const sizes = [];
     const visitedNodes = new Set();
+    let riverSize = 0;
     for (let i = 0; i < matrix.length; i++) {
         for (let j = 0; j < matrix[i].length; i++) {
             if (matrix[i][j]) {
@@ -17,8 +18,11 @@ function riverSizes(matrix) {
                     let adjacentNodes = findAdjacentHits(matrix, [i, j], visitedNodes);
                     while (adjacentNodes.length) {
                         const currNode = adjacentNodes.pop();
-                        adjacentNodes = adjacentNodes.concat(adjacentNodes())
+                        adjacentNodes = adjacentNodes.concat(adjacentNodes(matrix, currNode, visitedNodes));
+                        riverSize++;
                     }
+                    sizes.push(riverSize);
+                    riverSize = 0;
                 }
             }
         }
@@ -26,25 +30,33 @@ function riverSizes(matrix) {
     return sizes
 }
 
-function findAdjacentHits(matrix, [i, j], set) {
-    // coordinates: [i, j]
+function findAdjacentHits(matrix, coordinates, set) {
+    const [i, j] = coordinates;
     const hits = [];
     // find north
     // if it's at the top (i = 0), can't find north, otherwise, [i - 1][j]
     if (i) {
-
+        if (!set.has([i - 1, j])) {
+            hits.push([i - 1, j]);
+            set.add([i - 1, j])
+        }
     }
     // find south
     // if it's at the bottom (i = matrix.length - 1), can't find south, otherwise [i + 1]
-
-    // find east
-    // if it's at [i][matrix[i].length - 1], can't find east; otherwise [i][j+1]
-
-    // find west
-    // if it's at [i][0] can't find west, otherwise [i][j - 1]
-    if (j) {
-         
+    if (i < matrix.length - 1) {
+        if (!set.has([i + 1, j])) {
+            hits.push([i - 1, j]);
+            set.add([i - 1, j])
+        }
     }
+        // find east
+        // if it's at [i][matrix[i].length - 1], can't find east; otherwise [i][j+1]
+
+        // find west
+        // if it's at [i][0] can't find west, otherwise [i][j - 1]
+        if (j) {
+
+        }
     return hits
 }
 
