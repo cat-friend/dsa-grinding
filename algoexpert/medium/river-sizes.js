@@ -14,7 +14,11 @@ function riverSizes(matrix) {
             if (matrix[i][j]) {
                 if (visitedNodes.has(`${i}, ${j}`)) continue;
                 else {
-                    
+                    let adjacentNodes = findAdjacentHits(matrix, [i, j], visitedNodes);
+                    while (adjacentNodes.length) {
+                        const currNode = adjacentNodes.pop();
+                        adjacentNodes = adjacentNodes.concat(adjacentNodes())
+                    }
                 }
             }
         }
@@ -22,12 +26,14 @@ function riverSizes(matrix) {
     return sizes
 }
 
-function findAdjacentHits(matrix, coords, set) {
-    // coordinates: [i][j]
+function findAdjacentHits(matrix, [i, j], set) {
+    // coordinates: [i, j]
     const hits = [];
     // find north
     // if it's at the top (i = 0), can't find north, otherwise, [i - 1][j]
+    if (i) {
 
+    }
     // find south
     // if it's at the bottom (i = matrix.length - 1), can't find south, otherwise [i + 1]
 
@@ -36,6 +42,9 @@ function findAdjacentHits(matrix, coords, set) {
 
     // find west
     // if it's at [i][0] can't find west, otherwise [i][j - 1]
+    if (j) {
+         
+    }
     return hits
 }
 
