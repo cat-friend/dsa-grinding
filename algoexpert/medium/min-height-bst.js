@@ -37,10 +37,19 @@ class BST {
 }
 
 function minHeightBst(array) {
-    if (!array.length) return;
-    const midPoint = Math.floor(array.length / 2);
-    const shortBST = new BST(array[midPoint]);
+    const midpoint = Math.floor(array.length / 2);
+    const bst = new BST(array[midpoint]);
+    addingToBST(bst, array.slice(0, midpoint));
+    addingToBST(bst, array.slice(midpoint + 1));
+    return bst;
 }
 
+function addingToBST(bst, array) {
+    const midpoint = Math.floor(array.length / 2);
+    if (!array.length) return;
+    bst.insert(array[midpoint]);
+    addingToBST(bst, array.slice(0, midpoint));
+    addingToBST(bst, array.slice(midpoint + 1));
+}
 // Do not edit the line below.
 exports.minHeightBst = minHeightBst;
