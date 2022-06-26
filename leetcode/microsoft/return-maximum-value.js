@@ -45,7 +45,7 @@ the other variable is equal to 0
  * @param {number[]} arr2
  * @return {number}
  */
- var maxAbsValExpr = function (arr1, arr2) {
+var maxAbsValExpr = function (arr1, arr2) {
     arr1.sort((a, b) => a - b);
     arr2.sort((a, b) => a - b);
     console.log('hello')
@@ -69,5 +69,5 @@ function calculator(arr1, arr2, i, j) {
     return Math.abs(arr1[i] - arr1[j]) + Math.abs(arr2[i] - arr2[j]) + Math.abs(i - j);
 }
 
-console.log(maxAbsValExpr([1, -2, -5, 0, 10], [0, -2, -1, -7, -4])
+console.log(maxAbsValExpr([1, 2, 3, 4], [-1, 4, 5, 6])
 )
