@@ -60,7 +60,7 @@ dp(i,j) = dp(i + 1, j -1) && (s[i] === s[j]) ? true : false
 
 4. identify overlapping sub-problems and compute them only once. the optimal substructure mentioned above ensures that the s tate for a string depends only on the nstate for a single substring. if we cmopute (and save) the states for all smaller string first, larger strings can be processed by reusing previously saved states. the base cases that we have identified already define states for single and double letter strings. we can use those to compute states for three character (and subsequently larger) strings.
 
-5. the answer is found by canting all states that evaluate true, since each state tells whether a unique substring is a palindrome or not; counting the true states provides us the number of palindromic substrings
+5. the answer is found by counting all states that evaluate true, since each state tells whether a unique substring is a palindrome or not; counting the true states provides us the number of palindromic substrings
 
 
 approach - look at each char and the substrings that that char is the middle character - need left pointers and right pointers
@@ -73,6 +73,29 @@ even length - need to go to every even position aka at length 2 and then expand 
  * @return {number}
  */
 var countSubstrings = function (s) {
+    let palindromes = 0;
+    // dynamic programming state - s[l] === s[r] where l and r are pointers
+    // base cases - sStr.length === 1 --> palindrome; double letters are palindromes
+    // first go through and find all of the odd-length substrings
+    for (let i = 0; i < s.length; i++) {
+        let l = i;
+        let r = i;
+        while (l >= 0 && r < s.length && s[l] === s[r]) {
+            palindromes++;
+            l--
+            r++
+        }
+    }
+    for (let i = 0; i < s.length; i++) {
+        let l = i;
+        let r = i + 1;
+        while (l >= 0 && r < s.length && s[l] === s[r]) {
+            palindromes++;
+            l--
+            r++
+        }
+    }
+    return palindromes;
 };
 
 console.log(countSubstrings("aaa"));
