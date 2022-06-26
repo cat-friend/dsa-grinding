@@ -21,6 +21,23 @@ Constraints:
 
 2 <= arr1.length == arr2.length <= 40000
 -10^6 <= arr1[i], arr2[i] <= 10^6
+
+APPROACH:
+GIVEN:  two arrays
+GOAL: return maximum value of |arr1[i] - arr1[j]| + |arr2[i] - arr2[j]| + |i - j|
+[-420, -400
+|arr1[i] - arr1[j]| is maximized when:
+1. arr1[i] is maximum value and arr1[j] is minimum value when arr1[i] is positive
+2. arr1[i] is minimum value and arr1[j] is penultimate minimum value when arr1[i] and arr1[j] are negative
+
+
+|arr2[i] - arr2[j]| is maximized when:
+1. arr2[i] is maximum value and arr2[j] is minimum value when arr2[i] is positive
+2. arr2[i] is minimum value and arr2[j] is penultimate minimum value when arr2[i] and arr2[j] are negative
+
+| i - j | is maximized when
+i or j are equal to arr.length - 1
+the other variable is equal to 0
 */
 
 /**
@@ -28,6 +45,13 @@ Constraints:
  * @param {number[]} arr2
  * @return {number}
  */
- var maxAbsValExpr = function(arr1, arr2) {
-
+var maxAbsValExpr = function (arr1, arr2) {
+arr1.sort((a, b) => a - b);
+arr2.sort((a, b) => a - b);
+return maxComputer(arr1, arr2);
 };
+
+function maxComputer (arr1, arr2) {
+    
+
+}
