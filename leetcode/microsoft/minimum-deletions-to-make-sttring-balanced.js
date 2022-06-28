@@ -6,9 +6,25 @@ You can delete any number of characters in s to make s balanced. s is balanced i
 Return the minimum number of deletions needed to make s balanced.
 
 APPROACH:
-find where the first b is, find where the last a is
-count how many b's between the first b and the last a
-count how many a's between the first b and the last a
+try pre-processing
+start in the middle-
+go out one on the left and right -->
+see an a on the left, b on the right --> cool
+see an a on the left and an a on the right --> cool
+see a b on the left -- uh oh! need to delete
+see a b on the right
+
+look at index of first a and index of first b
+1) if a > b, need to delete
+count how many a's after index of first b
+count how many
+
+
+greedy algorithm:
+index of a, index of b
+if index of b < index of a --> deletions += index b - index a
+
+}
 */
 
 
@@ -16,6 +32,6 @@ count how many a's between the first b and the last a
  * @param {string} s
  * @return {number}
  */
- var minimumDeletions = function(s) {
+ var minimumDeletions = function(s, deletions = 0) {
 
 };
