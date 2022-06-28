@@ -25,7 +25,7 @@ var removeDigit = function (number, digit) {
     let max = 0, potentialMax = 0;
     for (let i = 0; i < number.length; i++) {
         if (number[i] === digit) {
-            potentialMax = +(number.slice(0, i) + number.slice(i + 1));
+            potentialMax = (number.slice(0, i) + number.slice(i + 1));
             max = potentialMax > max ? potentialMax : max;
         }
     }
