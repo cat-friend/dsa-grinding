@@ -31,5 +31,14 @@
 // There is at least one word in s.
 
 var reverseWords = function(s) {
-
+    const words = s.split(" ");
+    for (let i = words.length - 1; i >= 0; i--) {
+        if (words[i]) continue
+        else {
+            words.splice(i, 1);
+        }
+    }
+    return words.reverse().join(" ");
 };
+
+console.log(reverseWords("  hello world  "));
