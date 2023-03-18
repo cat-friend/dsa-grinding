@@ -4,8 +4,8 @@
  * Implement the BrowserHistory class:
  *
  * BrowserHistory(string homepage) Initializes the object with the homepage of the browser.
- * void visit(string url) Visits url from the current page. It clears up all the forward history.
- * string back(int steps) Move steps back in history. If you can only return x steps in the history and steps > x, you will return only x steps. Return the current url after moving back in history at most steps.
+ * visit(string url) Visits url from the current page. It clears up all the forward history.
+ * back(int steps) Move steps back in history. If you can only return x steps in the history and steps > x, you will return only x steps. Return the current url after moving back in history at most steps.
  * string forward(int steps) Move steps forward in history. If you can only forward x steps in the history and steps > x, you will forward only x steps. Return the current url after forwarding in history at most steps.
  *
  * Example:
@@ -37,36 +37,36 @@
  * At most 5000 calls will be made to visit, back, and forward.
  */
 
-/**
- * @param {string} homepage
- */
-var BrowserHistory = function(homepage) {
+class BrowserHistory {
+    constructor(homepage) {
+        this.homepage = homepage;
+        this.index = 0;
+        this.history = [homepage];
+    }
 
-};
+    visit(url) {
+        const { history } = this;
+        this.index++
+        history.splice(this.index, history.length - this.index, url)
+        return;
+    }
 
-/**
- * @param {string} url
- * @return {void}
- */
-BrowserHistory.prototype.visit = function(url) {
+    back(num) {
+        const { history } = this;
+        if (this.index) {
+            const move = Math.min(num, this.index);
+            this.index -= move;
+        }
+        return history[this.index]
+    }
 
-};
-
-/**
- * @param {number} steps
- * @return {string}
- */
-BrowserHistory.prototype.back = function(steps) {
-
-};
-
-/**
- * @param {number} steps
- * @return {string}
- */
-BrowserHistory.prototype.forward = function(steps) {
-
-};
+    forward(num) {
+        const { history } = this;
+        const move = Math.min(num, history.length - (this.index + 1));
+        this.index += move;
+        return history[this.index]
+    }
+}
 
 /**
  * Your BrowserHistory object will be instantiated and called as such:
@@ -74,4 +74,10 @@ BrowserHistory.prototype.forward = function(steps) {
  * obj.visit(url)
  * var param_2 = obj.back(steps)
  * var param_3 = obj.forward(steps)
+ */
+
+/**
+ * RESULTS:
+ * Run time: beats 89%
+ * Memory: beats 18%
  */
