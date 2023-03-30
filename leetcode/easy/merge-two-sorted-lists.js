@@ -61,13 +61,7 @@ var mergeTwoLists = function (list1, list2) {
     return listHead;
 };
 
-function ListNode(val, next) {
-    this.val = (val === undefined ? 0 : val)
-    this.next = (next === undefined ? null : next)
-}
-
-console.log(mergeTwoLists([], [0]));
 
 // results:
-// runtime: 5.17%
-// memory: 79.47%
+// runtime: 34.54%
+// memory: 63.84%
