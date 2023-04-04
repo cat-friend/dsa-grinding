@@ -32,32 +32,18 @@
  * @return {number}
  */
 var numRescueBoats = function(people, limit) {
-    people.sort((a, b) => a - b);
+    people.sort((a, b) => b - a);
     let boatsCounter = 0;
-    // look at largest person and pair with smallest person - will they fit?
-    // IF YES:
-    // boatsCounter++
-    // left++
-    // right--
-    // IF NO:
-    // left++
-    // right stays the same
-    // boatsCounter++
     let left = 0;
     let right = people.length - 1;
-    // while left <= right
-    // if left = right, boats++ left++
     while (left <= right) {
-        if (left = right) {
-            boatsCounter++;
-            left++;
-        }
-        if (people[left] + people[right] > limit) {
-        }
-        else {
+        if (people[left] + people[right] <= limit) {
             right--
         }
         boatsCounter++
         left++
     }
+    return boatsCounter
 };
+
+console.log(numRescueBoats([3, 2, 2, 1], 3))
