@@ -35,33 +35,35 @@
 
 var partitionString = function (s) {
     let stringPartitionsCounter = 0;
-    let i = 0;
+    let left = 0;
+    let right = 1;
+    // [a, b, a, c, a , b, a]
 
-    // minimum number of strings = make the strings as long as possible
-
-    while (i < s.length) {
-        let j = i + 1;
-        const currString = new Set(s[i]);
-        // iterate through the array, keep adding letters to the substring until you reach a letter that is already included in the string
-        while (j < s.length) {
-            if (!currString.has(s[j])) {
-                currString.add(s[j]);
-                j++
-                if (j === s.length - 1) {
-                    stringPartitionsCounter++;
-                    i++
-                }
-            }
-            // once you reach a letter that is already included in the string, start again at the next letter, increment stringPartitionsCounter
-            else {
-                stringPartitionsCounter++;
-
-                break;
-            }
+    let stringSet = new Set(s[left]);
+    while (left < s.length) {
+        if (!s[right]) {
+            stringPartitionsCounter++;
+            left = right;
+            break;
         }
-        i = j;
+        if (!stringSet.has(s[right])) {
+            stringSet.add(s[right]);
+            right++
+        }
+        else {
+            stringPartitionsCounter++;
+            stringSet = new Set(s[right]);
+            left = right;
+            right++;
+        }
     }
-    return stringPartitionsCounter;
+    return stringPartitionsCounter
 };
 
-console.log(partitionString("abacaba"))
+console.log(partitionString("ssssss"))
+
+/**
+ * results:
+ * runtime: 145 ms (beats 29%)
+ * memory: 51.1 mb (beats 28%)
+ */
