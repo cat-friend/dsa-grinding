@@ -57,7 +57,6 @@ const bst = (nums, target, index = 0) => {
     }
 }
 
-console.log(search([-1,0,3,5,9,12], 9));
 
 // results:
 // runtime - beats 72.39%
