@@ -29,6 +29,21 @@
  * @param {number[][]} grid
  * @return {number}
  */
-var numEnclaves = function(grid) {
 
-};
+// sea = 0
+// land = 1
+var numEnclaves = function (grid) {
+    // iterate through grid (minus edges) to look for a 1
+    // when you find a 1, numEnclaves++
+    let numEnclaves = 0;
+    for (let y = 1; y < grid.length - 1; y++) {
+        for (let x = 1; x < grid[y].length - 1; x++) {
+            if (grid[y][x] === 1) {
+                numEnclaves++
+            }
+        }
+    }
+    return numEnclaves
+}
+
+console.log(numEnclaves([[0, 0, 0, 0], [1, 0, 1, 0], [0, 1, 1, 0], [0, 0, 0, 0]]))
