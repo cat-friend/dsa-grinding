@@ -32,14 +32,63 @@
 
 // sea = 0
 // land = 1
+// iterate through grid to look for a 1
+// when you find a 1 && !visitedNodes.has(node), DFS and add nodes to visited nodes; if any of the nodes  (y === 0 || grid.length - 1) || (x === 0 || grid[0].length - 1) --> not an enclave
+// add nodes to a path
+// once all nodes of landmass found, numEnclaves += landmass.length and reset landmass
 var numEnclaves = function (grid) {
-    // iterate through grid (minus edges) to look for a 1
-    // when you find a 1, numEnclaves++
+    const visitedNodes = new Set();
+    const stack = [];
     let numEnclaves = 0;
-    for (let y = 1; y < grid.length - 1; y++) {
-        for (let x = 1; x < grid[y].length - 1; x++) {
-            if (grid[y][x] === 1) {
-                numEnclaves++
+    for (let y = 1; y < grid.length; y++) {
+        for (let x = 0; x < grid[y].length; x++) {
+            if (grid[y][x] === 1 && !visitedNodes.has(`[${y}, ${x}]`)) {
+                let isEnclave = true;
+                let landMass = [];
+                stack.push([y, x]);
+                landMass.push([y, x]);
+                while (stack.length) {
+                    const currNode = stack.pop();
+                    const [yCoord, xCoord] = currNode;
+                    visitedNodes.add(`[${yCoord}, ${xCoord}]`);
+                    if (yCoord === 0) {
+                        isEnclave = false;
+                    } else {
+                        if (grid[yCoord - 1][xCoord] === 1 && !visitedNodes.has(`[${yCoord - 1}, ${xCoord}]`)) {
+                            stack.push([yCoord - 1, xCoord]);
+                            landMass.push([yCoord - 1, xCoord]);
+                        }
+                    }
+                    if (yCoord === grid.length - 1) {
+                        isEnclave = false;
+                    } else {
+                        if (grid[yCoord + 1][xCoord] === 1 && !visitedNodes.has(`[${yCoord + 1}, ${xCoord}]`)) {
+                            stack.push([yCoord + 1, xCoord]);
+                            landMass.push([yCoord + 1, xCoord]);
+                        }
+                    }
+                    if (xCoord === 0) {
+                        isEnclave = false;
+                    } else {
+                        if (grid[yCoord][xCoord - 1] === 1 && !visitedNodes.has(`[${yCoord}, ${xCoord - 1}]`)) {
+                            stack.push([yCoord, xCoord - 1]);
+                            landMass.push([yCoord, xCoord - 1]);
+                        }
+                    }
+                    if (xCoord === grid[yCoord].length - 1) {
+                        isEnclave = false;
+                    } else {
+                        if (grid[yCoord][xCoord + 1] === 1 && !visitedNodes.has(`[${yCoord}, ${xCoord + 1}]`)) {
+                            stack.push([yCoord, xCoord + 1]);
+                            landMass.push([yCoord, xCoord + 1]);
+                        }
+                    }
+                }
+                if (isEnclave) {
+                    numEnclaves += landMass.length;
+                } else {
+                    landMass = [];
+                }
             }
         }
     }
