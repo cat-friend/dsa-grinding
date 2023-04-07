@@ -42,59 +42,54 @@ var closedIsland = function (grid) {
     let islandCounter = 0;
     // first traverse the grid to find land
     const visitedNodes = new Set();
+    const stack = [];
     for (let y = 0; y < grid.length; y++) {
-        const stack = [];
-        let isClosedIsland = true;
         for (let x = 0; x < grid[y].length; x++) {
-            if (visitedNodes.has(`[${y}, ${x}]`)) {
-                continue;
-            }
-            else {
+            if (grid[y][x] === 0 && !visitedNodes.has(`[${y}, ${x}]`)) {
+                let isClosedIsland = true;
                 // once you find a node that is land --> use DFS traverse land nodes (traverse more edges with DFS) and evaluate the nodes:
-                if (grid[y][x] === 0) {
-                    stack.push([y, x]);
-                    while (stack.length) {
-                        const currNode = stack.pop();
-                        const [yCoord, xCoord] = currNode;
-                        visitedNodes.add(`[${yCoord}, ${xCoord}]`);
-                        // add top = y - 1, bottom = y + 1, x + 0, left = x - 1, right = x + 1 to queue -- only if they haven't been added yet and only if grid[top, bottom, left, right] === 0
-                        // if top, bottom, left, right === undefined --> isClosedIsland = false;
-                        // top
-                        if (yCoord === 0) {
-                            isClosedIsland = false;
-                        } else {
-                            if (grid[yCoord - 1][xCoord] === 0 && !visitedNodes.has(`[${yCoord - 1}, ${xCoord}]`)) {
-                                stack.push[yCoord - 1, xCoord];
-                            }
-                        }
-                        // bottom
-                        if (yCoord === grid.length - 1) {
-                            isClosedIsland = false;
-                        } else {
-                            if (grid[yCoord + 1][xCoord] === 0 && !visitedNodes.has(`[${yCoord + 1}, ${xCoord}]`)) {
-                                stack.push[yCoord - 1, xCoord];
-                            }
-                        }
-                        // left
-                        if (xCoord === 0) {
-                            isClosedIsland = false;
-                        } else {
-                            if (grid[yCoord + 1][xCoord] === 0 && !visitedNodes.has(`[${yCoord + 1}, ${xCoord}]`)) {
-                                stack.push[yCoord - 1, xCoord];
-                            }
-                        }
-                        // right
-                        if (xCoord === grid[yCoord][0].length - 1) {
-                            isClosedIsland = false;
-                        } else {
-                            if (grid[yCoord + 1][xCoord] === 0 && !visitedNodes.has(`[${yCoord + 1}, ${xCoord}]`)) {
-                                stack.push[yCoord - 1, xCoord];
-                            }
+                stack.push([y, x]);
+                while (stack.length) {
+                    const currNode = stack.pop();
+                    const [yCoord, xCoord] = currNode;
+                    visitedNodes.add(`[${yCoord}, ${xCoord}]`);
+                    // add top = y - 1, bottom = y + 1, x + 0, left = x - 1, right = x + 1 to queue -- only if they haven't been added yet and only if grid[top, bottom, left, right] === 0
+                    // if top, bottom, left, right === undefined --> isClosedIsland = false;
+                    // top
+                    if (yCoord === 0) {
+                        isClosedIsland = false;
+                    } else {
+                        if (grid[yCoord - 1][xCoord] === 0 && !visitedNodes.has(`[${yCoord - 1}, ${xCoord}]`)) {
+                            stack.push([yCoord - 1, xCoord]);
                         }
                     }
-                    if (isClosedIsland) {
-                        islandCounter++
+                    // bottom
+                    if (yCoord === grid.length - 1) {
+                        isClosedIsland = false;
+                    } else {
+                        if (grid[yCoord + 1][xCoord] === 0 && !visitedNodes.has(`[${yCoord + 1}, ${xCoord}]`)) {
+                            stack.push([yCoord + 1, xCoord]);
+                        }
                     }
+                    // left
+                    if (xCoord === 0) {
+                        isClosedIsland = false;
+                    } else {
+                        if (grid[yCoord][xCoord - 1] === 0 && !visitedNodes.has(`[${yCoord}, ${xCoord - 1}]`)) {
+                            stack.push([yCoord, xCoord - 1]);
+                        }
+                    }
+                    // right
+                    if (xCoord === grid[yCoord].length - 1) {
+                        isClosedIsland = false;
+                    } else {
+                        if (grid[yCoord][xCoord + 1] === 0 && !visitedNodes.has(`[${yCoord }, ${xCoord + 1}]`)) {
+                            stack.push([yCoord, xCoord + 1]);
+                        }
+                    }
+                }
+                if (isClosedIsland) {
+                    islandCounter++
                 }
             }
         }
@@ -104,5 +99,14 @@ var closedIsland = function (grid) {
     // if any side doesn't have water or land (like edge of map), not fully enclosed -> isClosedIsland = false; keep traversing and adding to set so you don't visit the nodes again
     // return islandCounter
     return islandCounter;
-
 };
+
+console.log(closedIsland([
+    [1, 1, 1, 1, 1, 1, 1],
+    [1, 0, 0, 0, 0, 0, 1],
+    [1, 0, 1, 1, 1, 0, 1],
+    [1, 0, 1, 0, 1, 0, 1],
+    [1, 0, 1, 1, 1, 0, 1],
+    [1, 0, 0, 0, 0, 0, 1],
+    [1, 1, 1, 1, 1, 1, 1]
+]));
