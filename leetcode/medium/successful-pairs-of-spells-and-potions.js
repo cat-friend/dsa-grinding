@@ -40,6 +40,32 @@
  * @param {number} success
  * @return {number[]}
  */
-var successfulPairs = function(spells, potions, success) {
-
+var successfulPairs = function (spells, potions, success) {
+    // sort the potions in ascending order - nlogn
+    // numSuccesses = 0;
+    // iterate through spells
+    // iterate through potions - for loop { for loop } - m * n
+    // once you hit a num where potions[i] * spells [j] < success, stop. results.push(potions.length - i) - minor optimization
+    // return results
+    const results = [];
+    potions.sort((a, b) => a - b);
+    let numSuccesses = 0;
+    for (let i = 0; i < spells.length; i++) {
+        if (spells[i] >= success) {
+            numSuccesses = potions.length;
+        } else {
+            for (let j = 0; j < potions.length; j++) {
+                if (spells[i] * potions[j] >= success) {
+                    numSuccesses = potions.length - j;
+                    break;
+                }
+            }
+        }
+        results.push(numSuccesses);
+        numSuccesses = 0;
+    }
+    return results;
 };
+console.log(successfulPairs([15, 8, 19], [38, 36, 23], 328))
+
+// results:  very slow, lots of memory
