@@ -39,60 +39,72 @@
 var numEnclaves = function (grid) {
     const visitedNodes = new Set();
     const stack = [];
+    let landMass = 0;
     let numEnclaves = 0;
-    for (let y = 1; y < grid.length; y++) {
+    let isEnclave = true;
+
+    for (let y = 0; y < grid.length; y++) {
         for (let x = 0; x < grid[y].length; x++) {
             if (grid[y][x] === 1 && !visitedNodes.has(`[${y}, ${x}]`)) {
-                let isEnclave = true;
-                let landMass = [];
                 stack.push([y, x]);
-                landMass.push([y, x]);
+                visitedNodes.add(`[${y}, ${x}]`)
                 while (stack.length) {
-                    const currNode = stack.pop();
-                    const [yCoord, xCoord] = currNode;
-                    visitedNodes.add(`[${yCoord}, ${xCoord}]`);
+                    landMass++
+                    const [yCoord, xCoord] = stack.pop();
                     if (yCoord === 0) {
                         isEnclave = false;
                     } else {
                         if (grid[yCoord - 1][xCoord] === 1 && !visitedNodes.has(`[${yCoord - 1}, ${xCoord}]`)) {
+                            visitedNodes.add(`[${yCoord - 1}, ${xCoord}]`);
                             stack.push([yCoord - 1, xCoord]);
-                            landMass.push([yCoord - 1, xCoord]);
                         }
                     }
                     if (yCoord === grid.length - 1) {
                         isEnclave = false;
                     } else {
                         if (grid[yCoord + 1][xCoord] === 1 && !visitedNodes.has(`[${yCoord + 1}, ${xCoord}]`)) {
+                            visitedNodes.add(`[${yCoord + 1}, ${xCoord}]`);
                             stack.push([yCoord + 1, xCoord]);
-                            landMass.push([yCoord + 1, xCoord]);
                         }
                     }
                     if (xCoord === 0) {
                         isEnclave = false;
                     } else {
                         if (grid[yCoord][xCoord - 1] === 1 && !visitedNodes.has(`[${yCoord}, ${xCoord - 1}]`)) {
+                            visitedNodes.add(`[${yCoord}, ${xCoord - 1}]`);
                             stack.push([yCoord, xCoord - 1]);
-                            landMass.push([yCoord, xCoord - 1]);
+
                         }
                     }
-                    if (xCoord === grid[yCoord].length - 1) {
+                    if (xCoord === grid[0].length - 1) {
                         isEnclave = false;
                     } else {
                         if (grid[yCoord][xCoord + 1] === 1 && !visitedNodes.has(`[${yCoord}, ${xCoord + 1}]`)) {
                             stack.push([yCoord, xCoord + 1]);
-                            landMass.push([yCoord, xCoord + 1]);
+                            visitedNodes.add(`[${yCoord}, ${xCoord + 1}]`);
                         }
                     }
                 }
                 if (isEnclave) {
-                    numEnclaves += landMass.length;
-                } else {
-                    landMass = [];
+                    numEnclaves += landMass;
                 }
+                isEnclave = true;
+                landMass = 0;
             }
         }
     }
     return numEnclaves
 }
 
-console.log(numEnclaves([[0, 0, 0, 0], [1, 0, 1, 0], [0, 1, 1, 0], [0, 0, 0, 0]]))
+console.log(numEnclaves([
+    [0, 0, 0, 1, 1, 1, 0, 1, 1, 1, 1, 1, 0, 0, 0],
+    [1, 1, 1, 1, 0, 0, 0, 1, 1, 0, 0, 0, 1, 1, 1],
+    [1, 1, 1, 0, 0, 1, 0, 1, 1, 1, 0, 0, 0, 1, 1],
+    [1, 1, 0, 1, 0, 1, 1, 0, 0, 0, 1, 1, 0, 1, 0],
+    [1, 1, 1, 1, 0, 0, 0, 1, 1, 1, 0, 0, 0, 1, 1],
+    [1, 0, 1, 1, 0, 0, 1, 1, 1, 1, 1, 1, 0, 0, 0],
+    [0, 1, 0, 0, 1, 1, 1, 1, 0, 0, 1, 1, 1, 0, 0],
+    [0, 0, 1, 0, 0, 0, 0, 1, 1, 0, 0, 1, 0, 0, 0],
+    [1, 0, 1, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1, 0, 1],
+    [1, 1, 1, 0, 1, 0, 1, 0, 1, 1, 1, 0, 0, 1, 0]
+]));
