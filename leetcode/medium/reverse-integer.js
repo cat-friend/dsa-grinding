@@ -32,3 +32,5 @@ var reverse = function(x) {
 // results:
 // runtime:  beat 19%
 // memory:  beat 88%
+
+// fastest time - uses math - %10 and divide by 10 and floor

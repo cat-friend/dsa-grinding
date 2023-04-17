@@ -12,7 +12,6 @@ function maxSubsetSumNoAdjacent(array) {
         currentMax = Math.max(firstCombo, secondCombo + array[i]);
         secondCombo = firstCombo
         firstCombo = currentMax;
-
     }
     return currentMax;
   }

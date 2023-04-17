@@ -25,14 +25,20 @@ function readLine() {
 
 
 /*
- * Complete the 'getGroupedAnagrams' function below.
+ * Complete the 'getMinimumOperationCount' function below.
  *
  * The function is expected to return an INTEGER.
- * The function accepts STRING_ARRAY words as parameter.
- * Two strings are anagrams if they have the same characters in the same frequency but the characters are in different order
+ * The function accepts STRING s as parameter.
+ *
+ * A string is beautiful if no two adjacent characters are either
+ * 1) the same
+ * 2) adjacent in the alphabet
+ * find the min num of operations to make a string beautiful
+ * position % 26
+ * dynamic programming
  */
 
-function getGroupedAnagrams(words) {
+function getMinimumOperationCount(s) {
     // Write your code here
 
 }
@@ -40,16 +46,9 @@ function getGroupedAnagrams(words) {
 function main() {
     const ws = fs.createWriteStream(process.env.OUTPUT_PATH);
 
-    const wordsCount = parseInt(readLine().trim(), 10);
+    const s = readLine();
 
-    let words = [];
-
-    for (let i = 0; i < wordsCount; i++) {
-        const wordsItem = readLine();
-        words.push(wordsItem);
-    }
-
-    const result = getGroupedAnagrams(words);
+    const result = getMinimumOperationCount(s);
 
     ws.write(result + '\n');
 

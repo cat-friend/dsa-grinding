@@ -17,22 +17,21 @@
  * Edge case: [1, 2, 3, 4, 5, 6, 100, 200, 33333] oops, all odds! - return 0
  */
 
-function findNumOfEvenDigits(arrayOfNums) {
+function findNumOfEvenDigits(nums) {
     let evenDigitsCounter = 0;
-    // iterate through array of nums
-    for (const num in arrayOfNums) {
-        // turn each entry into string
+    for (const num of nums) {
         const numString = new String(num)
-        // evaluate length - if (!numString.length % 2) counter++
-        if (numString.length % 2 > 0) {
+        if (numString.length % 2 === 0) {
             evenDigitsCounter++
         }
     }
-    // return counter
     return evenDigitsCounter;
 }
 // Time complexity = O(n)
 // Space complexity = O(n)
+// Results:
+// runtime: 58 ms, beats 80.91%
+// memory: 44.8 mb, beats 15.4%
 
 // dividing by 10, 1000, 100000
 // 99 % 10 = 9.9
@@ -44,29 +43,31 @@ function findNumOfEvenDigits(arrayOfNums) {
 // Base case scenario - what if the entries could be in nested arrays?
 // flatten array first
 
-function mathFindNumOfEvenDigits(arrayOfNums) {
+function mathFindNumOfEvenDigits(nums) {
     let evenDigitsCounter = 0;
-    for (const num in arrayOfNums) {
-        // faster than turning into a string
+    for (const num of nums) {
         if (Math.floor(Math.log10(num)) % 2 > 0) {
             evenDigitsCounter++;
         }
     }
     return evenDigitsCounter;
 }
+// Results:
+// runtime: a little faster
+// memory:  a little less
 
-function recurseFindNums(arrayOfNums, evenDigitsCounter = 0) {
-    if (!arrayOfNums.length) {
+function recurseFindNums(nums, evenDigitsCounter = 0) {
+    if (!nums.length) {
         return evenDigitsCounter;
     }
-    if (Array.isArray(arrayOfNums[0])) {
-        return recurseFindNums([...arrayOfNums[0], ...arrayOfNums.slice(1)], evenDigitsCounter)
+    if (Array.isArray(nums[0])) {
+        return recurseFindNums([...nums[0], ...nums.slice(1)], evenDigitsCounter)
     }
     else {
-        if (Math.floor(Math.log10(arrayOfNums[0])) % 2 > 0) {
+        if (Math.floor(Math.log10(nums[0])) % 2 > 0) {
             evenDigitsCounter++;
         }
-        return recurseFindNums(arrayOfNums.slice(1), evenDigitsCounter)
+        return recurseFindNums(nums.slice(1), evenDigitsCounter)
     }
 }
 // how would recursion affect time/space complexity?
@@ -94,4 +95,8 @@ const nested = [10, [20, 30, [40, 5, 5, 50], 60, [70]]]
 // console.log('\n\ntestCase', mathFindNumOfEvenDigits(testCase))
 
 
-console.log('\n\nrecursive case', recurseFindNums(nested))
+// console.log('\n\nrecursive case', recurseFindNums(nested))
+console.log('\n\nLC', findNumOfEvenDigits([12,345,2,6,7896]))
+
+// feedback:
+// go through problem solving methods vs. intuition - communicate more clearly when debugging
