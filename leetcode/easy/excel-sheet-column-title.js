@@ -32,17 +32,27 @@
  * @param {number} columnNumber
  * @return {string}
  */
-var convertToTitle = function(columnNumber) {
+var convertToTitle = function (columnNumber) {
     let colName = "";
     let number = columnNumber;
-    const base = 26;
     const alphabet = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'];
     while (number > 0) {
         number--;
-        let integer = Math.floor(number / base);
-        let remainder = number % base;
-        colName = alphabet[remainder].concat(colName);
-        number = integer;
+        colName = alphabet[number % 26].concat(colName);
+        number = Math.floor(number / 26);
     }
     return colName;
 };
+console.log(convertToTitle(7101));
+
+/**
+ * Results:
+ *
+ * 1st attempt:
+ * Runtime: 57ms (20%)
+ * Memory: 41.98 mb (19%)
+ *
+ * 2nd attempt:
+ * Runtime: 42 ms (93%)
+ * 41.59 mb (62%)
+ */
