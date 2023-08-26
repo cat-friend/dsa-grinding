@@ -33,5 +33,16 @@
  * @return {string}
  */
 var convertToTitle = function(columnNumber) {
-
+    let colName = "";
+    let number = columnNumber;
+    const base = 26;
+    const alphabet = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'];
+    while (number > 0) {
+        number--;
+        let integer = Math.floor(number / base);
+        let remainder = number % base;
+        colName = alphabet[remainder].concat(colName);
+        number = integer;
+    }
+    return colName;
 };
