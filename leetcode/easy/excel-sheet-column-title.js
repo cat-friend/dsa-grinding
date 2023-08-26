@@ -56,3 +56,8 @@ console.log(convertToTitle(7101));
  * Runtime: 42 ms (93%)
  * 41.59 mb (62%)
  */
+
+/**
+ * Notes:
+ * Need to subtract 1 (L40) because arrays index @ 0, nums index @ 1
+ */
