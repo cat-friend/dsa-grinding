@@ -33,5 +33,21 @@ n == pairs.length
  * @return {number}
  */
 var findLongestChain = function(pairs) {
-
+    // sort array  by first num
+    // evaluate pairs:
+    // if p1[1] < p2[0], chain++
+    // else return chain
+    pairs.sort((a, b) => a[1] - b[1]);
+    console.log('pairs', pairs);
+    let chain = 1;
+    for (let i = 1; i < pairs.length - 1; i++) {
+        console.log('pairs[i]', i, pairs[i])
+        console.log('pairs[i][0]', pairs[i][0])
+        if (pairs[i][0] > pairs[i - 1][1]) {
+            chain++
+        }
+    }
+    return chain;
 };
+
+console.log(findLongestChain([[1,2],[2,3],[3,4]]))
