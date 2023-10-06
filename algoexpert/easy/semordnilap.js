@@ -12,20 +12,36 @@
  * Will I always receive at least one entry?
  *
  * Approach:
- * - Sort by length - nlogn
- * - Chunk by length?
- * - Iterate through chunks of strings of same length, check first letter against last letter, if no matches, discard word, repeat
- * If find a match, iterate through first word LTR and second word RTL.
- * - Time complexity: num of words * num of letters * num of matches
- * -
- *
- * Alternate approach:
- * Get char code sum for each word, compare - if any matches, compare those words
- * No sorting
- * Iterating through each letter of each word - n^2
+ * - make a set from the array
+ * - iterate through set.entries
+ * - construct reverse of each word
+ * - check set if reverse exists
+ * - if it exists, push to results
+ * - if it doesn't, continue
  */
 
 function semordnilap(words) {
-    // Write your code here.
-    return [];
+    const results = [];
+    const wordsSet = new Set(words);
+
+    for (const word of words) {
+        const reverse = word.split("").reverse().join("");
+        if (word == reverse) continue
+        if (wordsSet.has(reverse)) {
+            results.push([reverse, word]);
+            wordsSet.delete(reverse);
+            wordsSet.delete(word);
+        }
+    }
+    return results;
 }
+
+const example1 = ["diaper", "repaid", "semornilap", "palindromes", "aaa", "aab", "baa"];
+
+console.log("semordnilap example1", semordnilap(example1));
+
+/**
+ * Key points:
+ * Use Set so you can find the reverse in O(1) AND to remove duplicates AND so you can delete
+ * If word is a palindrome, it's not a semordnilap
+ */
