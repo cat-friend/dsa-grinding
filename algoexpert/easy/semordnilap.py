@@ -3,9 +3,7 @@ def semordnilap(words):
     results = []
     words_set = set(words)
     for word in words:
-        letter_arr = [*word]
-        letter_arr.reverse()
-        reverse = "".join(letter_arr)
+        reverse = word[::-1]
         if (word == reverse):
             continue
         if (reverse in words_set):
